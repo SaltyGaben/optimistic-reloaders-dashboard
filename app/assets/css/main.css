@@ -1,2 +1,15 @@
 @import "tailwindcss";
 @import "@nuxt/ui";
+
+
+:root {
+	--ui-primary: var(--ui-color-error-500)
+}
+
+body {
+	@apply bg-[#0a0f1f] text-slate-200;
+}
+
+button:hover {
+	cursor: pointer;
+}

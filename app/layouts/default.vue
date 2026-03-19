@@ -1,42 +1,51 @@
 <script setup lang="ts">
 import type { NavigationMenuItem } from '@nuxt/ui'
+import { UserButton } from '@clerk/vue'
+import { api } from '~~/convex/_generated/api'
 
 const router = useRouter()
+const { isLoaded, user } = useUser()
+const { data: currentUser } = useConvexQuery(api.users.current)
 
 const baseItems: NavigationMenuItem[] = [
 	{
-		label: 'Dashboard',
-		icon: 'i-lucide-layout-dashboard',
-		to: '/dashboard',
+		label: 'Hem',
+		icon: 'i-lucide-house',
+		to: '/'
 	},
 	{
-		label: 'Calendar',
-		icon: 'i-lucide-calendar-days',
-		to: '/dashboard/calendar',
+		label: 'Match Historik',
+		icon: 'i-lucide-history',
+		to: '/matches',
 	},
 	{
-		label: 'Standings',
-		icon: 'i-lucide-trophy',
-		to: '/dashboard/standings',
+		label: 'Spelare',
+		icon: 'i-lucide-users',
+		to: '/players',
 	},
 	{
-		label: 'Results',
-		icon: 'i-lucide-flag',
-		to: '/dashboard/results',
-	},
-	{
-		label: 'Incidents',
-		icon: 'i-lucide-triangle-alert',
-		to: '/dashboard/incidents',
+		label: 'Länkar',
+		icon: 'i-lucide-link',
+		to: '/links',
 	},
 ]
 
 const menuItems = computed(() => {
 	const items = [...baseItems]
+
+	if(currentUser.value?.role === 'admin') {
+		items.push({
+			label: 'Admin',
+			icon: 'i-lucide-shield-user',
+			to: '/admin',
+		})
+	}
 	return items
 })
 
-const isLoaded = ref(true)
+const isAdmin = computed(() => {
+	return false
+})
 
 </script>
 
@@ -49,12 +58,12 @@ const isLoaded = ref(true)
 				footer: 'border-t border-default flex-row',
 				header: 'justify-between',
 			}"
-			:default-size="20"
-			:min-size="16"
-			:max-size="20"
+			:default-size="18"
+			:min-size="18"
+			:max-size="24"
 		>
 			<template #header="{ collapsed }">
-				<h1 v-if="!collapsed">Dashboard</h1>
+				<h1 v-if="!collapsed"><span class="text-red-500 font-bold">CGI</span> Optimistic Reloaders</h1>
 				<UDashboardSidebarCollapse />
 			</template>
 
@@ -62,17 +71,34 @@ const isLoaded = ref(true)
 				<UNavigationMenu
 					:collapsed="collapsed"
 					:items="menuItems"
+					highlight
 					orientation="vertical"/>
 			</template>
 
 			<template #footer="">
-				<div v-if="!isLoaded" class="flex gap-2">
-					<USkeleton class="size-7 rounded-full" />
-					<h1>Loading...</h1>
-				</div>
-				<div class="flex gap-2">
-					<h1>name</h1>
-				</div>
+				<ClientOnly>
+					<div v-if="!isLoaded" class="flex gap-2">
+						<USkeleton class="size-7 rounded-full" />
+						<h1>Loading...</h1>
+					</div>
+					<div v-if="isLoaded && user" class="flex gap-2">
+						<UserButton>
+							<UserButton.MenuItems>
+								<UserButton.Action label="Profile" @click="router.push(`/profile/${user?.id}`)">
+									<template #labelIcon>
+										<UIcon name="i-lucide-user" :size="16" />
+									</template>
+								</UserButton.Action>
+								<UserButton.Action v-if="isAdmin" label="Admin" @click="router.push('/admin')">
+									<template #labelIcon>
+										<UIcon name="i-lucide-shield-user" :size="16" />
+									</template>
+								</UserButton.Action>
+							</UserButton.MenuItems>
+						</UserButton>
+						<h1>{{ user.username ?? user.fullName }}</h1>
+					</div>
+				</ClientOnly>
 			</template>
 		</UDashboardSidebar>
 		<UDashboardPanel class="p-6 overflow-y-scroll">
