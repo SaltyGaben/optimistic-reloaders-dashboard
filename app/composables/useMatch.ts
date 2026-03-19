@@ -39,12 +39,17 @@ export const useMatch = () => {
 		})
 	}
 
+	const useMatchHistory = (date: string) => {
+		return useConvexQuery(api.matchDay.getMatchHistory, { date })
+	}
+
 	return {
 		getMatchesForMonth,
 		getNextMatch,
 		handleReadyCheck,
 		useNextMatchQuery,
 		useMatchesForMonthQuery,
-		saveNewMatch
+		saveNewMatch,
+		useMatchHistory
 	}
 }

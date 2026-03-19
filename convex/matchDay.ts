@@ -90,3 +90,12 @@ export const saveNewMatch = mutation({
 		return { insertedId }
 	}
 })
+
+export const getMatchHistory = query({
+	args: {
+		date: v.string()
+	},
+	handler: async (ctx, { date }) => {
+		return await ctx.db.query('matchDay').withIndex('by_date', (q) => q.lte('date', date)).collect()
+	}
+})

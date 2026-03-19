@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { FormSubmitEvent } from '@nuxt/ui'
-import { getLocalTimeZone, today } from '@internationalized/date'
+import { getLocalTimeZone, today, Time  } from '@internationalized/date'
 import z from 'zod'
 
 const toast = useToast()
@@ -8,6 +8,7 @@ const { saveNewMatch } = useMatch()
 
 const inputDate = useTemplateRef('inputDate')
 const dateValue = shallowRef(today(getLocalTimeZone()))
+const timeValue = shallowRef(new Time(19, 0))
 
 const schema = z.object({
 	opponent: z.string().min(5, "Motståndare måste ha ett värde eller vara längre än 4 karaktärer"),
@@ -27,6 +28,10 @@ const state = reactive({
 
 watch(dateValue, (val) => {
 	state.date = val ? val.toString() : ''
+}, { immediate: true })
+
+watch(timeValue, (val) => {
+	state.time = val ? val.toString().slice(0, 5) : ''
 }, { immediate: true })
 
 const onSubmit = async (event: FormSubmitEvent<MatchSchema>) => {
@@ -84,7 +89,7 @@ const onSubmit = async (event: FormSubmitEvent<MatchSchema>) => {
 				</UFormField>
 
 				<UFormField label="Tid" name="time">
-					<UInputTime :hour-cycle="24"/>
+					<UInputTime v-model="timeValue" :hour-cycle="24"/>
 				</UFormField>
 
 				<UFormField label="Säsong" name="season" class="w-30">

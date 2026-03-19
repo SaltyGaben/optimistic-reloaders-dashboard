@@ -103,7 +103,7 @@ watch(
 
 				<div class="space-y-1">
 					<p class="text-xs uppercase tracking-[0.2em] text-slate-400">
-						Spelare redo
+						Spelare
 					</p>
 					<UTooltip
 						v-for="user in match.readyPlayers"
