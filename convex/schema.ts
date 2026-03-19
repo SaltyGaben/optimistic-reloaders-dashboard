@@ -28,7 +28,7 @@ export default defineSchema({
 			imageUrl: v.string(),
 			username: v.string()
 		})),
-		season: v.string(),
+		season: v.number(),
 		result: v.optional(v.object({
 			map: v.string(),
 			cgiScore: v.string(),

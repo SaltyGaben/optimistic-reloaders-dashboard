@@ -40,11 +40,15 @@ const handleReady = async (payload: { isReady: boolean; matchId: Id<'matchDay'> 
 
 	await handleReadyCheck(payload.isReady, payload.matchId, userId)
 }
+
+onMounted(() => {
+	selectedDate.value = today(getLocalTimeZone()).toString()
+})
 </script>
 
 <template>
 	<div class="flex flex-col gap-6 px-4 py-8 sm:px-6 lg:px-8">
-		<NextMatch :match="nextMatch" @ready="handleReady"/>
+		<NextMatch :match="nextMatch" :date="nextMatch?.date" @ready="handleReady"/>
 		<div class="flex flex-col gap-6">
 			<header class="space-y-2">
 				<h1 class="text-4xl font-semibold tracking-tight">
@@ -61,7 +65,7 @@ const handleReady = async (payload: { isReady: boolean; matchId: Id<'matchDay'> 
 				@month-change="onMonthChange"
 			/>
 
-			<NextMatch :match="selectedMatch" @ready="handleReady"/>
+			<NextMatch :match="selectedMatch" :date="selectedDate" @ready="handleReady"/>
 		</div>
 	</div>
 </template>

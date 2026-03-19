@@ -20,11 +20,13 @@
     "@vueuse/nuxt": "14.2.1",
     "convex": "^1.33.1",
     "convex-nuxt": "0.1.5",
+    "maska": "^3.2.0",
     "nuxt": "^4.4.2",
     "svix": "^1.88.0",
     "tailwindcss": "^4.2.1",
     "vue": "^3.5.30",
-    "vue-router": "^5.0.3"
+    "vue-router": "^5.0.3",
+    "zod": "^4.3.6"
   },
   "devDependencies": {
     "@eslint/css": "^1.0.0",

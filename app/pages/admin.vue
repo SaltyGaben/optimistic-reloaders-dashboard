@@ -1,7 +1,9 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+
+</script>
 
 <template>
 	<div>
-		<h1>test</h1>
+		<NewMatchCard />
 	</div>
 </template>

@@ -2,8 +2,6 @@
 import { computed, onMounted, ref } from "vue"
 import type { Doc } from "~~/convex/_generated/dataModel"
 
-const { user } = useUser()
-
 type MatchDay = Doc<'matchDay'>
 type WeekdayIndex = 0 | 1 | 2 | 3 | 4 | 5 | 6
 

@@ -16,6 +16,7 @@
     }
   ],
 	"compilerOptions": {
-    "types": ["bun"]
+    "types": ["bun"],
+		"strict": true
   }
 }

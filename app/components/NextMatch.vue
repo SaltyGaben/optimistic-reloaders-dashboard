@@ -5,7 +5,8 @@ import type { Doc, Id } from '~~/convex/_generated/dataModel'
 type MatchDay = Doc<'matchDay'>
 
 const props = defineProps<{
-	match: MatchDay | undefined
+	match: MatchDay | undefined,
+	date: string | undefined
 }>()
 
 const emit = defineEmits<{
@@ -104,9 +105,18 @@ watch(
 					<p class="text-xs uppercase tracking-[0.2em] text-slate-400">
 						Spelare redo
 					</p>
-					<p class="font-medium text-slate-100">
-						{{ match.readyPlayers.length }} spelare
-					</p>
+					<UTooltip
+						v-for="user in match.readyPlayers"
+						:key="user.userId"
+						:text="user.username"
+						:delay-duration="0"
+						arrow
+						:ui="{
+							content: 'p-4',
+							text: 'text-sm'
+						}">
+						<img :src="user.imageUrl" alt="Spelar ikon" class="rounded-full size-10">
+					</UTooltip>
 				</div>
 			</div>
 
@@ -157,5 +167,8 @@ watch(
 				</div>
 			</div>
 		</div>
+	</UCard>
+	<UCard v-if="!match && date">
+		<h1 class="mt-1 text-2xl font-semibold text-slate-50">Det finns ingen match för denna dagen: {{ date }}</h1>
 	</UCard>
 </template>

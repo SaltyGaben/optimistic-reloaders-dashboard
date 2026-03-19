@@ -1,5 +1,6 @@
 import { api } from "~~/convex/_generated/api"
 import type { Doc, Id } from "~~/convex/_generated/dataModel"
+import type { MatchSchema } from "~/components/NewMatchCard.vue"
 
 type MatchDay = Doc<'matchDay'>
 
@@ -32,11 +33,18 @@ export const useMatch = () => {
 		)
 	}
 
+	const saveNewMatch = async (match: MatchSchema) => {
+		return await client.mutation(api.matchDay.saveNewMatch, {
+			...match
+		})
+	}
+
 	return {
 		getMatchesForMonth,
 		getNextMatch,
 		handleReadyCheck,
 		useNextMatchQuery,
 		useMatchesForMonthQuery,
+		saveNewMatch
 	}
 }

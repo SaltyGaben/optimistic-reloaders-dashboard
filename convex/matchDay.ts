@@ -73,3 +73,20 @@ export const handleReady = mutation({
 		})
 	},
 })
+
+export const saveNewMatch = mutation({
+	args: {
+		date: v.string(),
+		opponent: v.string(),
+		time: v.string(),
+		season: v.number()
+	},
+	handler: async (ctx, args) => {
+		const insertedId = await ctx.db.insert('matchDay', {
+			...args,
+			readyPlayers: []
+		})
+
+		return { insertedId }
+	}
+})

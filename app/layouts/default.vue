@@ -58,8 +58,8 @@ const isAdmin = computed(() => {
 				footer: 'border-t border-default flex-row',
 				header: 'justify-between',
 			}"
-			:default-size="18"
-			:min-size="18"
+			:default-size="20"
+			:min-size="20"
 			:max-size="24"
 		>
 			<template #header="{ collapsed }">
