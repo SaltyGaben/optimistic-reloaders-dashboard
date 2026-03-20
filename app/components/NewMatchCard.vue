@@ -60,7 +60,7 @@ const onSubmit = async (event: FormSubmitEvent<MatchSchema>) => {
 	<UForm :schema="schema" :state="state" @submit="onSubmit">
 		<UCard>
 			<template #header>
-				<h1>Skapa ny match</h1>
+				<h1 class="text-2xl font-semibold">Skapa ny match</h1>
 			</template>
 			<div class="grid grid-cols-4 gap-4">
 				<UFormField label="Motståndare" name="opponent">

@@ -1,5 +1,6 @@
 import { defineSchema, defineTable } from "convex/server"
 import { v } from "convex/values"
+import { Maps } from "../app/types/maps"
 
 export default defineSchema({
 	users: defineTable({
@@ -17,6 +18,7 @@ export default defineSchema({
 		lastName: v.optional(v.string()),
 		fullName: v.optional(v.string()),
 		steamId: v.optional(v.string()),
+		shirtSize: v.optional(v.string()),
 		metadata: v.optional(v.any()),
 	}).index("by_externalId", ["externalId"]),
 	matchDay: defineTable({
@@ -30,9 +32,9 @@ export default defineSchema({
 		})),
 		season: v.number(),
 		result: v.optional(v.object({
-			map: v.string(),
-			cgiScore: v.string(),
-			opponentScore: v.string(),
+			map: v.union(...Object.values(Maps).map(m => v.literal(m))),
+			cgiScore: v.number(),
+			opponentScore: v.number(),
 			replayLink: v.optional(v.string())
 		})),
 	}).index("by_date", ["date"])

@@ -1,8 +1,19 @@
 import { api } from "~~/convex/_generated/api"
 import type { Doc, Id } from "~~/convex/_generated/dataModel"
 import type { MatchSchema } from "~/components/NewMatchCard.vue"
+import type { MatchResultSchema } from "~/components/EditMatchModal.vue"
+import { Maps } from "~/types/maps"
 
 type MatchDay = Doc<'matchDay'>
+
+const mapValues = Object.values(Maps) as unknown as string[]
+const normalizeMap = (map: string): Maps => {
+	if (!mapValues.includes(map)) {
+		throw new Error(`Invalid map value: ${map}`)
+	}
+
+	return map as Maps
+}
 
 export const useMatch = () => {
 	const client = useConvexClient()
@@ -43,6 +54,20 @@ export const useMatch = () => {
 		return useConvexQuery(api.matchDay.getMatchHistory, { date })
 	}
 
+	const updateMatch = async (data: MatchResultSchema, matchId: Id<'matchDay'>) => {
+		const normalizedData = {
+			...data,
+			result: data.result
+				? {
+					...data.result,
+					map: normalizeMap(data.result.map),
+				}
+				: undefined,
+		}
+
+		return await client.mutation(api.matchDay.updateMatch, { data: normalizedData, matchId: matchId })
+	}
+
 	return {
 		getMatchesForMonth,
 		getNextMatch,
@@ -50,6 +75,7 @@ export const useMatch = () => {
 		useNextMatchQuery,
 		useMatchesForMonthQuery,
 		saveNewMatch,
-		useMatchHistory
+		useMatchHistory,
+		updateMatch
 	}
 }

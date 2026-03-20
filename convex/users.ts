@@ -211,3 +211,26 @@ export const getAccessState = query({
 		return await userByExternalId(ctx, identity.subject)
 	}
 })
+
+export const updatePlayer = mutation({
+	args: {
+		data: v.object({
+			firstName: v.string(),
+			lastName: v.string(),
+			steamId: v.string(),
+			shirtSize: v.string(),
+		}),
+		userId: v.id('users')
+	},
+	handler: async (ctx, args) => {
+
+		const fullName = args.data.firstName + ' ' + args.data.lastName
+
+		await ctx.db.patch('users', args.userId, {
+			...args.data,
+			fullName: fullName
+		})
+
+		return args.userId
+	}
+})

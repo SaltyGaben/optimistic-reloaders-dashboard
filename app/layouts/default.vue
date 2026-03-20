@@ -75,7 +75,7 @@ const isAdmin = computed(() => {
 					orientation="vertical"/>
 			</template>
 
-			<template #footer="">
+			<template #footer="{ collapsed }">
 				<ClientOnly>
 					<div v-if="!isLoaded" class="flex gap-2">
 						<USkeleton class="size-7 rounded-full" />
@@ -96,7 +96,7 @@ const isAdmin = computed(() => {
 								</UserButton.Action>
 							</UserButton.MenuItems>
 						</UserButton>
-						<h1>{{ user.username ?? user.fullName }}</h1>
+						<h1 v-if="!collapsed">{{ user.username ?? user.fullName }}</h1>
 					</div>
 				</ClientOnly>
 			</template>

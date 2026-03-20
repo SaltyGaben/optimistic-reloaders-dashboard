@@ -1,3 +1,4 @@
+import { Maps } from "../app/types/maps"
 import { mutation, query } from './_generated/server'
 import { v } from 'convex/values'
 
@@ -97,5 +98,30 @@ export const getMatchHistory = query({
 	},
 	handler: async (ctx, { date }) => {
 		return await ctx.db.query('matchDay').withIndex('by_date', (q) => q.lte('date', date)).collect()
+	}
+})
+
+export const updateMatch = mutation({
+	args: {
+		data: v.object({
+			date: v.string(),
+			opponent: v.string(),
+			time: v.string(),
+			season: v.number(),
+			result: v.optional(v.object({
+				map: v.union(...Object.values(Maps).map(m => v.literal(m))),
+				cgiScore: v.number(),
+				opponentScore: v.number(),
+				replayLink: v.optional(v.string())
+			})),
+		}),
+		matchId: v.id('matchDay')
+	},
+	handler: async (ctx, args) => {
+		await ctx.db.patch('matchDay', args.matchId, {
+			...args.data
+		})
+
+		return args.matchId
 	}
 })
