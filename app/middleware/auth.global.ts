@@ -8,17 +8,22 @@ const adminRoute = createRouteMatcher(['/admin'])
 export default defineNuxtRouteMiddleware(async (to) => {
 	if (!import.meta.client) return
 
+	console.log("Loading middleware")
+	
+
 	const { isLoaded, isSignedIn, getToken } = useAuth()
 	const userStore = useUserStore()
+
+	console.log("useAuth Loaded: ", isLoaded, ", and Signed In: ", isSignedIn)
 
 	if (!isLoaded.value) return
 
 	if (!isSignedIn.value) {
-		if (!nonProtectedRoute(to)) return navigateTo('/login')
+		if (!nonProtectedRoute(to)) return navigateTo('/sign-in')
 		return
 	}
 
-	if (to.path === '/login') return navigateTo('/')
+	if (to.path === '/sign-in') return navigateTo('/')
 
 	if (!userStore.currentUser) userStore.loadFromStorage()
 
@@ -33,10 +38,10 @@ export default defineNuxtRouteMiddleware(async (to) => {
 			])
 		} catch (err) {
 			console.error('Failed to get Convex token:', err)
-			return navigateTo('/login')
+			return navigateTo('/sign-in')
 		}
 
-		if (!token) return navigateTo('/login')
+		if (!token) return navigateTo('/sign-in')
 
 		const config = useRuntimeConfig()
 		const client = new ConvexHttpClient(config.public.convexUrl)

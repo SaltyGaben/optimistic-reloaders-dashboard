@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { SignUp } from '@clerk/nuxt/components'
+
 definePageMeta({
 	layout: 'no-navbar'
 })
@@ -7,6 +9,6 @@ definePageMeta({
 
 <template>
 	<div class="flex flex-col items-center justify-center min-h-screen">
-		<SignIn />
+		<SignUp />
 	</div>
 </template>
