@@ -13,7 +13,7 @@ defineProps<{
 
 <template>
 	<div>
-		<UCard>
+		<UCard class="h-full">
 			<template #header>
 				<div class="flex items-center justify-between gap-3">
 					<div>
@@ -54,7 +54,7 @@ defineProps<{
 						<p class="text-xs uppercase tracking-[0.2em] text-slate-400">
 							Motståndare
 						</p>
-						<p class="font-medium text-slate-100">
+						<p class="font-medium text-slate-100 ">
 							{{ match.opponent || 'Inte satt' }}
 						</p>
 					</div>
@@ -77,17 +77,17 @@ defineProps<{
 						</UTooltip>
 					</div>
 				</div>
-				<USeparator v-if="match.result" />
-				<p v-if="match.result" class="text-lg uppercase tracking-[0.2em] text-slate-100">
+				<USeparator />
+				<p class="text-lg uppercase tracking-[0.2em] text-slate-100">
 					Resultat
 				</p>
-				<div v-if="match.result" class="grid grid-cols-2 gap-4 text-sm">
+				<div class="grid grid-cols-2 gap-4 text-sm">
 					<div class="space-y-1">
 						<p class="text-xs uppercase tracking-[0.2em] text-slate-400">
 							CGI rundor
 						</p>
 						<p class="font-medium text-slate-100">
-							{{ match.result.cgiScore || 'Inte satt' }}
+							{{ match.result?.cgiScore || 'Inte satt' }}
 						</p>
 					</div>
 
@@ -96,7 +96,7 @@ defineProps<{
 							{{ match.opponent }} rundor
 						</p>
 						<p class="font-medium text-slate-100">
-							{{ match.result.opponentScore || 'Inte satt' }}
+							{{ match.result?.opponentScore || 'Inte satt' }}
 						</p>
 					</div>
 
@@ -105,7 +105,7 @@ defineProps<{
 							Map
 						</p>
 						<p class="font-medium text-slate-100">
-							{{ match.result.map || 'Inte satt' }}
+							{{ match.result?.map || 'Inte satt' }}
 						</p>
 					</div>
 
@@ -113,7 +113,7 @@ defineProps<{
 						<p class="text-xs uppercase tracking-[0.2em] text-slate-400">
 							Replay länk
 						</p>
-						<p v-if="!match.result.replayLink" class="font-medium text-slate-100">
+						<p v-if="!match.result?.replayLink" class="font-medium text-slate-100">
 							Ingen replay länk finns
 						</p>
 						<NuxtLink v-else :to="match.result.replayLink">Replay länk</NuxtLink>

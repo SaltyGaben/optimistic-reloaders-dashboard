@@ -206,7 +206,7 @@ export const getAccessState = query({
 		const identity = await ctx.auth.getUserIdentity()
 		if (!identity) {			
 			return null
-		} 
+		}
 
 		return await userByExternalId(ctx, identity.subject)
 	}

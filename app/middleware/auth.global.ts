@@ -1,29 +1,24 @@
 import { ConvexHttpClient } from 'convex/browser'
 import { api } from '~~/convex/_generated/api'
 
-const protectedRoute = createRouteMatcher(['/', '/matches', '/players', '/links'])
-const nonProtectedRoute = createRouteMatcher(['/sign-in', '/sign-up'])
+const protectedRoute = createRouteMatcher(['/dashboard', '/matches', '/players', '/links'])
+const nonProtectedRoute = createRouteMatcher(['/sign-in', '/sign-up', '/not-allowed', '/'])
 const adminRoute = createRouteMatcher(['/admin'])
 
 export default defineNuxtRouteMiddleware(async (to) => {
-	if (!import.meta.client) return
-
-	console.log("Loading middleware")
-	
+	if (!import.meta.client) return	
 
 	const { isLoaded, isSignedIn, getToken } = useAuth()
 	const userStore = useUserStore()
 
-	console.log("useAuth Loaded: ", isLoaded, ", and Signed In: ", isSignedIn)
-
 	if (!isLoaded.value) return
+	
+	if (to.path === '/not-allowed') return
 
 	if (!isSignedIn.value) {
 		if (!nonProtectedRoute(to)) return navigateTo('/sign-in')
 		return
 	}
-
-	if (to.path === '/sign-in') return navigateTo('/')
 
 	if (!userStore.currentUser) userStore.loadFromStorage()
 
@@ -48,9 +43,16 @@ export default defineNuxtRouteMiddleware(async (to) => {
 		client.setAuth(token)
 
 		const user = await client.query(api.users.getAccessState)
+		
 		if (!user) return navigateTo('/not-allowed')
 
-		userStore.setUser(user)
+		const isServerMember = await client.action(api.users.checkMembership, { userId: user.externalId })
+		
+		userStore.setUser({ ...user, isServerMember: isServerMember })
+
+		if (!isServerMember) {
+			return navigateTo('/not-allowed')
+		}
 	}
 
 	if (protectedRoute(to) && !userStore.isMember) {
@@ -58,6 +60,10 @@ export default defineNuxtRouteMiddleware(async (to) => {
 	}
 
 	if (adminRoute(to) && !userStore.isAdmin) {
-		return navigateTo('/')
+		return navigateTo('/dashboard')
+	}
+
+	if (to.path === '/' && userStore.isMember) {
+		return navigateTo('/dashboard')
 	}
 })
