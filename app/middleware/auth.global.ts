@@ -2,7 +2,7 @@ import { ConvexHttpClient } from 'convex/browser'
 import { api } from '~~/convex/_generated/api'
 
 const protectedRoute = createRouteMatcher(['/', '/matches', '/players', '/links'])
-const nonProtectedRoute = createRouteMatcher(['/login'])
+const nonProtectedRoute = createRouteMatcher(['/sign-in', '/sign-up'])
 const adminRoute = createRouteMatcher(['/admin'])
 
 export default defineNuxtRouteMiddleware(async (to) => {
