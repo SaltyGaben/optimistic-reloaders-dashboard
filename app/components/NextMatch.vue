@@ -105,18 +105,21 @@ watch(
 					<p class="text-xs uppercase tracking-[0.2em] text-slate-400">
 						Spelare
 					</p>
-					<UTooltip
-						v-for="user in match.readyPlayers"
-						:key="user.userId"
-						:text="user.username"
-						:delay-duration="0"
-						arrow
-						:ui="{
-							content: 'p-4',
-							text: 'text-sm'
-						}">
-						<img :src="user.imageUrl" alt="Spelar ikon" class="rounded-full size-10">
-					</UTooltip>
+					
+					<div class="flex flex-row gap-2">
+						<UTooltip
+							v-for="user in match.readyPlayers"
+							:key="user.userId"
+							:text="user.username"
+							:delay-duration="0"
+							arrow
+							:ui="{
+								content: 'p-4',
+								text: 'text-sm'
+							}">
+							<img :src="user.imageUrl" alt="Spelar ikon" class="rounded-full size-10">
+						</UTooltip>
+					</div>
 				</div>
 			</div>
 

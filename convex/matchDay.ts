@@ -27,7 +27,11 @@ export const getMatchesForMonth = query({
 export const getNextMatch = query({
 	args: { date: v.string() },
 	handler: async (ctx, { date }) => {
-		return await ctx.db.query('matchDay').withIndex('by_date', (q) => q.gte('date', date)).order('asc').first()
+		const upcomingMatches = await ctx.db.query('matchDay').withIndex('by_date', (q) => q.gte('date', date)).order('asc').collect()
+
+		const firstDate = upcomingMatches[0]?.date
+
+		return upcomingMatches.filter((m) => m.date === firstDate)
 	}
 })
 

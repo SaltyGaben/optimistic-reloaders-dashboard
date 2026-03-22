@@ -74,6 +74,11 @@ const matchState = reactive({
 	}
 })
 
+const setTimeFromString = (value: string) => {
+	const [hours, minutes] = value.split(':').map(Number)
+	timeValue.value = new Time(hours, minutes)
+}
+
 watch(dateValue, (val) => {
 	matchState.date = val ? val.toString() : ''
 }, { immediate: true })
@@ -82,11 +87,12 @@ watch(timeValue, (val) => {
 	matchState.time = val ? val.toString().slice(0, 5) : ''
 }, { immediate: true })
 
-watch(open, (val) => {
-	if(val) {
+watch(open, (val) => {	
+	if(val) {		
 		matchState.opponent = props.match.opponent
 		matchState.date = props.match.date
 		matchState.time = props.match.time
+		setTimeFromString(props.match.time)
 		matchState.season = props.match.season
 
 		if(props.match.result) {
@@ -124,24 +130,24 @@ const onSubmit = async (event: FormSubmitEvent<MatchResultSchema>) => {
 </script>
 
 <template>
-	<UForm
-		:state="matchState"
-		:schema="matchResultSchema"
-		@submit.prevent="onSubmit">
-		<UModal
-			v-model:open="open"
-			title="Redigera match"
-			description="Här kan du redigera matchinformation och resultat"
-			:ui="{ title: 'text-2xl font-semibold' }"
-			:portal="false">
-			<UTooltip text="Redigera match">
-				<UButton
-					icon="i-lucide-pencil"
-					size="sm"
-					variant="ghost"
-					color="primary" />
-			</UTooltip>
-			<template #body>
+	<UModal
+		v-model:open="open"
+		title="Redigera match"
+		description="Här kan du redigera matchinformation och resultat"
+		:ui="{ title: 'text-2xl font-semibold' }">
+		<UTooltip text="Redigera match">
+			<UButton
+				icon="i-lucide-pencil"
+				size="sm"
+				variant="ghost"
+				color="primary" />
+		</UTooltip>
+		<template #body>
+			<UForm
+				:state="matchState"
+				:schema="matchResultSchema"
+				class="flex flex-col gap-4"
+				@submit.prevent="onSubmit">
 				<div class="flex flex-col gap-4">
 					<div>
 						<h1 class="text-lg uppercase tracking-[0.2em] mb-2">Match information</h1>
@@ -208,19 +214,20 @@ const onSubmit = async (event: FormSubmitEvent<MatchResultSchema>) => {
 						</div>
 					</div>
 				</div>
-			</template>
-			<template #footer="{ close }">
-				<UButton
-					label="Avbryt"
-					color="neutral"
-					variant="outline"
-					@click="close" />
-				<UButton
-					label="Spara"
-					variant="subtle"
-					color="primary"
-					type="submit" />
-			</template>
-		</UModal>
-	</UForm>
+				<USeparator class="w-full" />
+				<div class="flex flex-row gap-4">
+					<UButton
+						label="Avbryt"
+						color="neutral"
+						variant="outline"
+						@click="open = false" />
+					<UButton
+						label="Spara"
+						variant="subtle"
+						color="primary"
+						type="submit" />
+				</div>
+			</UForm>
+		</template>		
+	</UModal>
 </template>

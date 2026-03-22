@@ -65,21 +65,24 @@ const onSubmit = async(event: FormSubmitEvent<FormSchema>) => {
 </script>
 
 <template>
-	<UForm :state="playerState" :schema="playerSchema" @submit.prevent="onSubmit">
-		<UModal
-			v-model:open="open"	
-			title="Redigera spelare"
-			description="Här kan du redigera information om spelare"
-			:ui="{ title: 'text-2xl font-semibold' }"
-			:portal="false">
-			<UTooltip text="Redigera spelare">
-				<UButton
-					icon="i-lucide-pencil"
-					size="sm"
-					variant="ghost"
-					color="primary" />
-			</UTooltip>
-			<template #body>
+	<UModal
+		v-model:open="open"	
+		title="Redigera spelare"
+		description="Här kan du redigera information om spelare"
+		:ui="{ title: 'text-2xl font-semibold' }">
+		<UTooltip text="Redigera spelare">
+			<UButton
+				icon="i-lucide-pencil"
+				size="sm"
+				variant="ghost"
+				color="primary" />
+		</UTooltip>
+		<template #body>
+			<UForm
+				:state="playerState"
+				:schema="playerSchema"
+				class="flex flex-col gap-4"
+				@submit.prevent="onSubmit">
 				<div class="flex flex-col gap-4">
 					<div>
 						<h1 class="text-lg uppercase tracking-[0.2em] mb-2">Spelar information</h1>
@@ -107,19 +110,19 @@ const onSubmit = async(event: FormSubmitEvent<FormSchema>) => {
 						</div>
 					</div>
 				</div>
-			</template>
-			<template #footer="{ close }">
-				<UButton
-					label="Avbryt"
-					color="neutral"
-					variant="outline"
-					@click="close" />
-				<UButton
-					label="Spara"
-					color="primary"
-					variant="subtle"
-					type="submit" />
-			</template>
-		</UModal>
-	</UForm>
+				<div class="flex flex-row gap-4">
+					<UButton
+						label="Avbryt"
+						color="neutral"
+						variant="outline"
+						@click="open = false" />
+					<UButton
+						label="Spara"
+						color="primary"
+						variant="subtle"
+						type="submit" />
+				</div>
+			</UForm>
+		</template>
+	</UModal>
 </template>

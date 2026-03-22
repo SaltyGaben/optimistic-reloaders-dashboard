@@ -70,6 +70,7 @@ export const upsertFromClerk = internalMutation({
 			email: data.external_accounts[0]?.email_address,
 			avatarUrl: data.external_accounts[0]?.image_url ?? '',
 			lastLoginAt: data.last_sign_in_at ? fromUnix(data.last_sign_in_at, 'local').toString() : undefined,
+			role: 'player',
 			isActive: true
 		}
 

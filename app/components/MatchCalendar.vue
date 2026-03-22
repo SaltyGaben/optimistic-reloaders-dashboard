@@ -218,7 +218,7 @@ const getCellClasses = (cell: DayCell): string[] => {
 					v-for="cell in days"
 					:key="cell.iso"
 					type="button"
-					class="relative flex h-24 flex-col items-start rounded-md border text-left text-xs transition-colors hover:scale-105"
+					class="relative flex h-26 flex-col items-start rounded-md border text-left text-xs transition-colors hover:scale-105"
 					:class="getCellClasses(cell)"
 					@click="onDayClick(cell)"
 				>
@@ -227,17 +227,9 @@ const getCellClasses = (cell: DayCell): string[] => {
 					>
 						{{ cell.date.getDate() }}
 					</span>
-					<div v-if="matchDaySet.has(cell.iso)" class="ml-1 flex flex-col gap-1">
-						<h1>{{ matchDays.find(m => m.date === cell.iso)?.opponent }}</h1>
-						<h1>{{ matchDays.find(m => m.date === cell.iso)?.time }}</h1>
-						<div class="flex flex-row gap-1">
-							<img
-								v-for="user in matchDays.find(m => m.date === cell.iso)?.readyPlayers"
-								:key="user.userId"
-								:src="user.imageUrl"
-								alt="ikon"
-								class="size-5 rounded-full">
-						</div>
+					<div v-for="match in matchDays.filter(m => m.date === cell.iso)" :key="match._id" class="ml-1 flex flex-row gap-1 mb-2 flex-wrap">
+						<h1>{{ match.opponent }}</h1>
+						<h1>- {{ match.time }}</h1>
 					</div>
 					<span
 						v-if="matchDaySet.has(cell.iso)"

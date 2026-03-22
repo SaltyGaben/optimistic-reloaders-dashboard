@@ -24,7 +24,7 @@ defineProps<{
 							{{ match.opponent || 'Motståndare ej satt' }}
 						</h1>
 					</div>
-					<EditMatchModal v-if="userStore.isAdmin" :match="match" />
+					<EditMatchModal v-if="userStore.isAdmin" :match="match"/>
 				</div>
 			</template>
 			<div class="space-y-6">

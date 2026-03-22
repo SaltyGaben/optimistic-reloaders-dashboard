@@ -3,13 +3,15 @@ import NextMatch from "~/components/NextMatch.vue"
 import type { Doc, Id } from "~~/convex/_generated/dataModel"
 import { today, getLocalTimeZone  } from '@internationalized/date'
 
+type MatchDay = Doc<'matchDay'>
+
 const { handleReadyCheck, useNextMatchQuery, useMatchesForMonthQuery } = useMatch()
 const userStore = useUserStore()
 
 const todayIso = today(getLocalTimeZone()).toString()
 
 const { data: rawNextMatch } = useNextMatchQuery(todayIso)
-const nextMatch = computed<Doc<"matchDay"> | undefined>(() => rawNextMatch.value ?? undefined)
+const nextMatchList = computed<MatchDay[]>(() => rawNextMatch.value ?? [])
 
 const currentYear = ref<number>(Number(todayIso.split("-")[0]))
 const currentMonth = ref<number>(Number(todayIso.split("-")[1]))
@@ -24,14 +26,10 @@ const onMonthChange = async (payload: { year: number; month: number }) => {
 	currentMonth.value = payload.month
 }
 
-const selectedMatch = computed(() => {
-	const match = matchDays.value?.find(m => m.date === selectedDate.value)
+const selectedMatches = computed(() => {
+	const matches = matchDays.value?.filter(m => m.date === selectedDate.value)
 
-	if (match) {
-		return match
-	}
-	
-	return undefined
+	return matches ?? []
 })
 
 const handleReady = async (payload: { isReady: boolean; matchId: Id<'matchDay'> }) => {
@@ -48,7 +46,14 @@ onMounted(() => {
 
 <template>
 	<div class="flex flex-col gap-6 px-4 py-8 sm:px-6 lg:px-8">
-		<NextMatch :match="nextMatch" :date="nextMatch?.date" @ready="handleReady"/>
+		<div class="flex flex-row gap-2">
+			<NextMatch
+				v-for="nextMatch in nextMatchList"
+				:key="nextMatch._id"
+				:match="nextMatch"
+				:date="nextMatch?.date"
+				@ready="handleReady"/>
+		</div>
 		<div class="flex flex-col gap-6">
 			<header class="space-y-2">
 				<h1 class="text-4xl font-semibold tracking-tight">
@@ -65,7 +70,12 @@ onMounted(() => {
 				@month-change="onMonthChange"
 			/>
 
-			<NextMatch :match="selectedMatch" :date="selectedDate" @ready="handleReady"/>
+			<NextMatch
+				v-for="selectedMatch in selectedMatches"
+				:key="selectedMatch._id"
+				:match="selectedMatch"
+				:date="selectedDate"
+				@ready="handleReady"/>
 		</div>
 	</div>
 </template>
