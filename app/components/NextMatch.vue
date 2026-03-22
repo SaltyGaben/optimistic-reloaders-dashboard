@@ -106,7 +106,7 @@ watch(
 						Spelare
 					</p>
 					
-					<div class="flex flex-row gap-2">
+					<div class="h-10 flex flex-row gap-2">
 						<UTooltip
 							v-for="user in match.readyPlayers"
 							:key="user.userId"

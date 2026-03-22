@@ -11,7 +11,7 @@ const baseItems: NavigationMenuItem[] = [
 	{
 		label: 'Hem',
 		icon: 'i-lucide-house',
-		to: '/'
+		to: '/dashboard'
 	},
 	{
 		label: 'Match Historik',
