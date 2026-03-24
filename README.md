@@ -24,7 +24,17 @@ Built with Nuxt 4, Convex, Clerk, and Nuxt UI, the app gives the team one place 
 
 ## Local development
 
-### 1. Install dependencies
+### 1. Set up projects
+
+To start developing you need to create projects in the following services:
+
+- Convex
+- Clerk
+- Discord
+
+More info on how to create projects can be found in their docs.
+
+### 2. Install dependencies
 
 ```bash
 bun install
@@ -51,6 +61,14 @@ Main variables used by the app:
 - `REQUIRED_GUILD_ID`
 
 ### 3. Run the app
+
+#### 1. Start the connection to convex
+
+```bash
+bunx convex dev
+```
+
+#### 2. Start the dev server
 
 ```bash
 bun run dev
