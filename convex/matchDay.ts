@@ -35,6 +35,13 @@ export const getNextMatch = query({
 	}
 })
 
+export const getUpcomingMatches = query({
+	args: { date: v.string() },
+	handler: async (ctx, { date }) => {
+		return await ctx.db.query('matchDay').withIndex('by_date', (q) => q.gte('date', date)).order('asc').collect()
+	}
+})
+
 export const handleReady = mutation({
 	args: {
 		ready: v.boolean(),

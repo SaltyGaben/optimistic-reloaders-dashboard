@@ -52,6 +52,7 @@ onMounted(() => {
 				:key="nextMatch._id"
 				:match="nextMatch"
 				:date="nextMatch?.date"
+				:context="'next'"
 				@ready="handleReady"/>
 		</div>
 		<div class="flex flex-col gap-6">
@@ -75,6 +76,7 @@ onMounted(() => {
 				:key="selectedMatch._id"
 				:match="selectedMatch"
 				:date="selectedDate"
+				:context="'chosen'"
 				@ready="handleReady"/>
 		</div>
 	</div>

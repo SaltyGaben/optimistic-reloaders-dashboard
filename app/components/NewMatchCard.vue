@@ -97,7 +97,11 @@ const onSubmit = async (event: FormSubmitEvent<MatchSchema>) => {
 				</UFormField>
 			</div>
 			<template #footer>
-				<UButton type="submit" label="Submit" color="success"/>
+				<UButton
+					type="submit"
+					label="Spara"
+					variant="subtle"
+					color="primary"/>
 			</template>
 		</UCard>
 	</UForm>

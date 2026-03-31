@@ -2,6 +2,8 @@
 import { computed, onMounted, ref } from "vue"
 import type { Doc } from "~~/convex/_generated/dataModel"
 
+const { sortMatches } = useMatch()
+
 type MatchDay = Doc<'matchDay'>
 type WeekdayIndex = 0 | 1 | 2 | 3 | 4 | 5 | 6
 
@@ -169,6 +171,10 @@ const getCellClasses = (cell: DayCell): string[] => {
 		border,
 	]
 }
+
+const sortedMatches = computed(() => {
+	return sortMatches(props.matchDays, "earliest")
+})
 </script>
 
 <template>
@@ -227,7 +233,7 @@ const getCellClasses = (cell: DayCell): string[] => {
 					>
 						{{ cell.date.getDate() }}
 					</span>
-					<div v-for="match in matchDays.filter(m => m.date === cell.iso)" :key="match._id" class="ml-1 flex flex-row gap-1 mb-2 flex-wrap">
+					<div v-for="match in sortedMatches.filter(m => m.date === cell.iso)" :key="match._id" class="ml-1 flex flex-row gap-1 mb-2 flex-wrap">
 						<h1>{{ match.opponent }}</h1>
 						<h1>- {{ match.time }}</h1>
 					</div>

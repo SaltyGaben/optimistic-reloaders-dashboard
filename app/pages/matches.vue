@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { today, getLocalTimeZone  } from '@internationalized/date'
 
-const { useMatchHistory } = useMatch()
+const { useMatchHistory, sortMatches } = useMatch()
 
 const { data: matchHistory, isPending } = useMatchHistory(today(getLocalTimeZone()).toString())
 
@@ -14,7 +14,7 @@ const { data: matchHistory, isPending } = useMatchHistory(today(getLocalTimeZone
 	</div>
 	<div v-else class="grid grid-cols-2 gap-4">
 		<MatchHistory
-			v-for="match in (matchHistory ? [...matchHistory].reverse() : [])"
+			v-for="match in sortMatches(matchHistory ?? [], 'latest')"
 			:key="match._id"
 			:match="match"
 		/>

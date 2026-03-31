@@ -6,7 +6,8 @@ type MatchDay = Doc<'matchDay'>
 
 const props = defineProps<{
 	match: MatchDay | undefined,
-	date: string | undefined
+	date: string | undefined,
+	context: 'next' | 'chosen'
 }>()
 
 const emit = defineEmits<{
@@ -56,7 +57,7 @@ watch(
 			<div class="flex items-center justify-between gap-3">
 				<div>
 					<p class="text-xs uppercase tracking-[0.2em] text-slate-400">
-						Nästa match
+						{{ context === 'next' ? "Nästa match" : "Match" }}
 					</p>
 					<h1 class="mt-1 text-2xl font-semibold text-slate-50">
 						{{ match.opponent || 'Motståndare ej satt' }}

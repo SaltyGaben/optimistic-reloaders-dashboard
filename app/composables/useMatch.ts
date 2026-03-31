@@ -68,6 +68,28 @@ export const useMatch = () => {
 		return await client.mutation(api.matchDay.updateMatch, { data: normalizedData, matchId: matchId })
 	}
 
+	const useUpcomingMatches = (date: string) => {
+		return useConvexQuery(api.matchDay.getUpcomingMatches, { date })
+	}
+
+	const sortMatches = (matchList: MatchDay[], timeSort: 'earliest' | 'latest' = 'earliest') => {
+		const today = new Date().setHours(0, 0, 0, 0)
+		const dateTs = (date: string) => new Date(`${date}T00:00:00`).getTime()
+		const dateTimeTs = (date: string, time: string) => new Date(`${date}T${time}:00`).getTime()
+
+		return matchList.sort((a, b) => {
+			const diffA = Math.abs(dateTs(a.date) - today)
+			const diffB = Math.abs(dateTs(b.date) - today)
+	
+			// 1. Closest date to today
+			if (diffA !== diffB) return diffA - diffB
+	
+			// 2. Same date → sort by time (earliest or latest)
+			const timeDiff = dateTimeTs(a.date, a.time) - dateTimeTs(b.date, b.time)
+			return timeSort === 'latest' ? -timeDiff : timeDiff
+		})
+	}
+
 	return {
 		getMatchesForMonth,
 		getNextMatch,
@@ -76,6 +98,8 @@ export const useMatch = () => {
 		useMatchesForMonthQuery,
 		saveNewMatch,
 		useMatchHistory,
-		updateMatch
+		updateMatch,
+		useUpcomingMatches,
+		sortMatches
 	}
 }
