@@ -1,7 +1,7 @@
 import { ConvexHttpClient } from 'convex/browser'
 import { api } from '~~/convex/_generated/api'
 
-const protectedRoute = createRouteMatcher(['/dashboard', '/matches', '/players', '/links'])
+const protectedRoute = createRouteMatcher(['/dashboard', '/matches', '/players', '/links', '/statistics'])
 const nonProtectedRoute = createRouteMatcher(['/sign-in', '/sign-up', '/not-allowed', '/'])
 const adminRoute = createRouteMatcher(['/admin'])
 

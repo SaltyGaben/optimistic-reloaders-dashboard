@@ -10,6 +10,7 @@
 
 import type * as http from "../http.js";
 import type * as matchDay from "../matchDay.js";
+import type * as statistics from "../statistics.js";
 import type * as users from "../users.js";
 
 import type {
@@ -21,6 +22,7 @@ import type {
 declare const fullApi: ApiFromModules<{
   http: typeof http;
   matchDay: typeof matchDay;
+  statistics: typeof statistics;
   users: typeof users;
 }>;
 

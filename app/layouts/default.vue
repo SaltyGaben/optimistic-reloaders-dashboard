@@ -28,6 +28,11 @@ const baseItems: NavigationMenuItem[] = [
 		icon: 'i-lucide-link',
 		to: '/links',
 	},
+	{
+		label: 'Statistik',
+		icon: 'i-lucide-chart-column-big',
+		to: '/statistics',
+	},
 ]
 
 const menuItems = computed(() => {
