@@ -56,10 +56,10 @@ watch(
 		<template #header>
 			<div class="flex items-center justify-between gap-3">
 				<div>
-					<p class="text-xs uppercase tracking-[0.2em] text-slate-400">
+					<p class="text-xs uppercase tracking-[0.2em] text-muted">
 						{{ context === 'next' ? "Nästa match" : "Match" }}
 					</p>
-					<h1 class="mt-1 text-2xl font-semibold text-slate-50">
+					<h1 class="mt-1 text-2xl font-semibold text-highlighted">
 						{{ match.opponent || 'Motståndare ej satt' }}
 					</h1>
 				</div>
@@ -76,34 +76,34 @@ watch(
 		<div class="space-y-6">
 			<div class="grid grid-cols-2 gap-4 text-sm">
 				<div class="space-y-1">
-					<p class="text-xs uppercase tracking-[0.2em] text-slate-400">
+					<p class="text-xs uppercase tracking-[0.2em] text-muted">
 						Datum
 					</p>
-					<p class="font-medium text-slate-100">
+					<p class="font-medium text-default">
 						{{ match.date || 'Inte satt' }}
 					</p>
 				</div>
 
 				<div class="space-y-1">
-					<p class="text-xs uppercase tracking-[0.2em] text-slate-400">
+					<p class="text-xs uppercase tracking-[0.2em] text-muted">
 						Tid
 					</p>
-					<p class="font-medium text-slate-100">
+					<p class="font-medium text-default">
 						{{ match.time || 'Inte satt' }}
 					</p>
 				</div>
 
 				<div class="space-y-1">
-					<p class="text-xs uppercase tracking-[0.2em] text-slate-400">
+					<p class="text-xs uppercase tracking-[0.2em] text-muted">
 						Motståndare
 					</p>
-					<p class="font-medium text-slate-100">
+					<p class="font-medium text-default">
 						{{ match.opponent || 'Inte satt' }}
 					</p>
 				</div>
 
 				<div class="space-y-1">
-					<p class="text-xs uppercase tracking-[0.2em] text-slate-400">
+					<p class="text-xs uppercase tracking-[0.2em] text-muted">
 						Spelare
 					</p>
 					
@@ -125,12 +125,12 @@ watch(
 			</div>
 
 			<div
-				class="flex flex-col gap-4 rounded-xl border border-white/10 bg-white/5 px-4 py-3 sm:flex-row sm:items-center sm:justify-between"
+				class="flex flex-col gap-4 rounded-xl border border-default bg-muted/50 px-4 py-3 sm:flex-row sm:items-center sm:justify-between"
 			>
 				<div class="flex items-center gap-3">
 					<div
 						class="flex h-9 w-9 items-center justify-center rounded-full"
-						:class="isReady ? 'bg-emerald-500/15 text-emerald-400' : 'bg-amber-500/15 text-amber-400'"
+						:class="isReady ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400' : 'bg-amber-500/15 text-amber-600 dark:text-amber-400'"
 					>
 						<UIcon
 							:name="isReady ? 'i-lucide-circle-check-big' : 'i-lucide-circle-question-mark'"
@@ -138,16 +138,16 @@ watch(
 						/>
 					</div>
 					<div>
-						<p class="text-xs uppercase tracking-[0.2em] text-slate-400">
+						<p class="text-xs uppercase tracking-[0.2em] text-muted">
 							Tillgänglighet
 						</p>
 						<p
 							class="text-sm font-medium"
-							:class="isReady ? 'text-emerald-300' : 'text-amber-200'"
+							:class="isReady ? 'text-emerald-700 dark:text-emerald-300' : 'text-amber-800 dark:text-amber-200'"
 						>
 							{{ isReady ? 'Du är markerad som redo' : 'Du är inte markerad som redo' }}
 						</p>
-						<p class="mt-0.5 text-xs text-slate-400">
+						<p class="mt-0.5 text-xs text-muted">
 							Kan du spela den här matchen?
 						</p>
 					</div>
@@ -173,6 +173,6 @@ watch(
 		</div>
 	</UCard>
 	<UCard v-if="!match && date">
-		<h1 class="mt-1 text-2xl font-semibold text-slate-50">Det finns ingen match för denna dagen: {{ date }}</h1>
+		<h1 class="mt-1 text-2xl font-semibold text-highlighted">Det finns ingen match för denna dagen: {{ date }}</h1>
 	</UCard>
 </template>

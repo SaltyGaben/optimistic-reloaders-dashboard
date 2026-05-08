@@ -60,7 +60,7 @@ onMounted(() => {
 				<h1 class="text-4xl font-semibold tracking-tight">
 					Match kalender
 				</h1>
-				<p class="text-sm text-slate-400">
+				<p class="text-sm text-muted">
 					Här kan du se alla matcher som ska spelas och information om dem
 				</p>
 			</header>

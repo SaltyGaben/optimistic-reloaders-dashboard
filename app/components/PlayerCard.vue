@@ -31,51 +31,51 @@ const showEditButton = computed(() => {
 			</div>
 		</template>
 		<div class="space-y-6">
-			<p class="text-lg uppercase tracking-[0.2em] text-slate-100">
+			<p class="text-lg uppercase tracking-[0.2em] text-default">
 				Information
 			</p>
 			<div class="grid grid-cols-2 gap-4 text-sm">
 				<div class="space-y-1">
-					<p class="text-xs uppercase tracking-[0.2em] text-slate-400">
+					<p class="text-xs uppercase tracking-[0.2em] text-muted">
 						Förnamn
 					</p>
-					<p class="font-medium text-slate-100">
+					<p class="font-medium text-default">
 						{{ player.firstName || 'Inte satt' }}
 					</p>
 				</div>
 
 				<div class="space-y-1">
-					<p class="text-xs uppercase tracking-[0.2em] text-slate-400">
+					<p class="text-xs uppercase tracking-[0.2em] text-muted">
 						Efternamn
 					</p>
-					<p class="font-medium text-slate-100">
+					<p class="font-medium text-default">
 						{{ player.lastName || 'Inte satt' }}
 					</p>
 				</div>
 
 				<div class="space-y-1">
-					<p class="text-xs uppercase tracking-[0.2em] text-slate-400">
+					<p class="text-xs uppercase tracking-[0.2em] text-muted">
 						Fullt namn
 					</p>
-					<p class="font-medium text-slate-100">
+					<p class="font-medium text-default">
 						{{ player.fullName || 'Inte satt' }}
 					</p>
 				</div>
 
 				<div class="space-y-1">
-					<p class="text-xs uppercase tracking-[0.2em] text-slate-400">
+					<p class="text-xs uppercase tracking-[0.2em] text-muted">
 						Steam ID
 					</p>
-					<p class="font-medium text-slate-100">
+					<p class="font-medium text-default">
 						{{ player.steamId || 'Inte satt' }}
 					</p>
 				</div>
 
 				<div class="space-y-1">
-					<p class="text-xs uppercase tracking-[0.2em] text-slate-400">
+					<p class="text-xs uppercase tracking-[0.2em] text-muted">
 						Tröjstorlek
 					</p>
-					<p class="font-medium text-slate-100">
+					<p class="font-medium text-default">
 						{{ player.shirtSize || 'Inte satt' }}
 					</p>
 				</div>
